@@ -112,10 +112,10 @@ nmb
 ```
 
 Tuesday is the only day for which the data is collected 9 times, but its data is not missing, so Wednesday will be used in the first part of the analysis. Plotting the mean activity and activity for each occurance of Wednesday, an interesting observation can be made.
-```{r echo=FALSE}
+```{r echo=TRUE}
 act_wed<-actl[actl$day==days[3],]
 #empty plot
-plot(0,0,ylim=c(0,800),xlim=c(0,288),type="n",xaxt="n",xlab="Time",ylab="number of steps",main="Daily activity")
+plot(0,0,ylim=c(0,800),xlim=c(0,288),type="n",xaxt="n",xlab="Time",ylab="Number of steps",main="Daily activity")
 axis(1, at=seq(1,289,24),labels=labels)
 col1="aquamarine3"
 col2="chocolate"
@@ -129,7 +129,7 @@ lines(act_wed[(5*288+1):(6*288+288),1],type="l",col=col1)
 lines(act_wed[(6*288+1):(7*288+288),1],type="l",col=col1)
 lines(act_wed[(7*288+1):(7*288+288),1],type="l",col=col1)
 lines(aver_actl[[3]],type="l",col=col3)
-lines(aver_actl[[3]],type="l",col=col3)
+lines(aver_actl[[3]],type="l",col=col3) #to make it fat and stick out
 legend("topright",legend=c("wed type 1","wed type 2","mean"),lty=c(1,1,1),col=c(col1,col2,col3))
 ```
 
@@ -178,6 +178,12 @@ for (i in 1:length(days)) {
     #nightly toilet runs
     activity[(nastart+30),"steps"]<-round(meanday*0.01)
 }
+```
+
+Example of the resulting activity during one day
+```{r}
+plot(activity[1:288,1],type="l",col="red",xaxt="n",xlab="Time",ylab="Number of steps",main="Daily activity")
+axis(1, at=seq(1,289,24),labels=labels)
 ```
 
 Using the code from parts 1 and 2 (substituting the relevant data frame name) histogram of total number of steps can be plotted and mean/median values are found.

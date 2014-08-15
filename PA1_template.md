@@ -162,6 +162,30 @@ nmb
 ```
 
 Tuesday is the only day for which the data is collected 9 times, but its data is not missing, so Wednesday will be used in the first part of the analysis. Plotting the mean activity and activity for each occurance of Wednesday, an interesting observation can be made.
+
+```r
+act_wed <- actl[actl$day == days[3], ]
+# empty plot
+plot(0, 0, ylim = c(0, 800), xlim = c(0, 288), type = "n", xaxt = "n", xlab = "Time", 
+    ylab = "Number of steps", main = "Daily activity")
+axis(1, at = seq(1, 289, 24), labels = labels)
+col1 = "aquamarine3"
+col2 = "chocolate"
+col3 = "red"
+lines(act_wed[(0 * 288 + 1):(1 * 288 + 288), 1], type = "l", col = col1)
+lines(act_wed[(1 * 288 + 1):(2 * 288 + 288), 1], type = "l", col = col2)
+lines(act_wed[(2 * 288 + 1):(3 * 288 + 288), 1], type = "l", col = col1)
+lines(act_wed[(3 * 288 + 1):(4 * 288 + 288), 1], type = "l", col = col2)
+lines(act_wed[(4 * 288 + 1):(5 * 288 + 288), 1], type = "l", col = col1)
+lines(act_wed[(5 * 288 + 1):(6 * 288 + 288), 1], type = "l", col = col1)
+lines(act_wed[(6 * 288 + 1):(7 * 288 + 288), 1], type = "l", col = col1)
+lines(act_wed[(7 * 288 + 1):(7 * 288 + 288), 1], type = "l", col = col1)
+lines(aver_actl[[3]], type = "l", col = col3)
+lines(aver_actl[[3]], type = "l", col = col3)  #to make it fat and stick out
+legend("topright", legend = c("wed type 1", "wed type 2", "mean"), lty = c(1, 
+    1, 1), col = c(col1, col2, col3))
+```
+
 ![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16.png) 
 
 From the above plot it can be seen that the mean number of steps is much smaller than the actual data for any of the days. So simply changing NAs with mean values, while retains the mean total number of steps, does not represent the actual daily activity at all. The same happens for any other day, if plotted.
@@ -215,6 +239,16 @@ for (i in 1:length(days)) {
 }
 ```
 
+Example of the resulting activity during one day
+
+```r
+plot(activity[1:288, 1], type = "l", col = "red", xaxt = "n", xlab = "Time", 
+    ylab = "Number of steps", main = "Daily activity")
+axis(1, at = seq(1, 289, 24), labels = labels)
+```
+
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
+
 Using the code from parts 1 and 2 (substituting the relevant data frame name) histogram of total number of steps can be plotted and mean/median values are found.
 
 ```
@@ -225,7 +259,7 @@ Using the code from parts 1 and 2 (substituting the relevant data frame name) hi
 ## [1] "Median total number of steps is 11015"
 ```
 
-![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
+![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19.png) 
 
 Since the imputting was made using mean number of steps for each separate day of the week, mean and median values of the whole data frame have changed. Mean has changed only slightly, but the median has changed quite a bit: this is due to the imputting strategy and the definition of median value. The shape of steps taken in a given interval with activity is a step function instead of beeing a gaussian bell as it is during the days with available data, creating a lot of elements with the same value.
 
@@ -233,7 +267,7 @@ Since the imputting was made using mean number of steps for each separate day of
 ## Differences in activity patterns between weekdays and weekends
 
 The following graph compares the average activity during weekends and weekdays.
-![plot of chunk unnamed-chunk-19](figure/unnamed-chunk-19.png) 
+![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20.png) 
 
 Code for plotting the above graph
 
