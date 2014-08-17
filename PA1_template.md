@@ -118,7 +118,7 @@ paste(substr(int, 1, nchar(int) - 2), ":", substr(int, nchar(int) - 1, nchar(int
 
 As was found in the beginning of this document, NAs come in batches of 288, i.e. one whole day, so the missing data can only be filled using measurements from other days. It'd be better to use the method with the largest amount of data available, but activity may differ from day to day, so there is a need to inspect the avaiable data. 
 
-Add two columns which hold days of the week.
+Add a column which hold days of the week.
 
 ```r
 actl <- act
@@ -194,7 +194,7 @@ In 6 of those Wednesdays, there is a lot of activity during the morning hours (~
 
 The strategy to fill the missing data is going to be the following:
 - calculate mean number of total steps for a certain day of the week
-- pick a random starting point from 6 to 9 AM
+- pick a random starting point from 6 to 9:30 AM
 - input 50% of total number of step (in a day) into 10 consequent intervals, evenly distributed
 - from the end of that interval, locate 7 equally spaced (1.5 hours) intervals of 10 minutes and fill each with 7% of total number of steps, equally distributed.
 - place the remaining 1% in the middle of the night to emulate sleepwalking, just for fun
@@ -220,7 +220,7 @@ for (i in 1:length(days)) {
     daytotal <- as.numeric(tapply(activity[activity$day == days[i], ]$steps, 
         activity[activity$day == days[i], ]$date, sum))
     meanday <- mean(daytotal, na.rm = TRUE)
-    mornstart <- as.numeric(sample(72:118, 1))
+    mornstart <- as.numeric(sample(72:114, 1))
     mornend <- mornstart + 10
     # find the beginning of a day with NAs
     nastart <- as.numeric(which(is.na(activity))[1])
@@ -249,7 +249,7 @@ axis(1, at = seq(1, 289, 24), labels = labels)
 
 ![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18.png) 
 
-Using the code from parts 1 and 2 (substituting the relevant data frame name) histogram of total number of steps can be plotted and mean/median values are found.
+Using the code from part 1 (substituting the relevant data frame name) histogram of total number of steps can be plotted and mean/median values are found.
 
 ```
 ## [1] "Mean total number of steps is 10821"
